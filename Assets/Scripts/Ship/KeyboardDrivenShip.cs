@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 /// <summary>
@@ -13,7 +14,7 @@ public class KeyboardDrivenShip : Ship
 		base.Start ();
 	}
 
-	void Update () 
+	protected override void Update () 
     {
         if (Dead)
         {
@@ -21,12 +22,12 @@ public class KeyboardDrivenShip : Ship
 
             if (timer > 2)
             {
-                if (GameVariables.GetPlayerLives() > 0)
+                if (Lives > 0)
                     Spawn();
                 else
                     if (!loadedGameover)
                     {
-                        Application.LoadLevelAdditive("Gameover");
+						SceneManager.LoadScene("Gameover", LoadSceneMode.Additive);
                         loadedGameover = true;
                     }
             } 

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 /// </summary>
 public class Bullet : MonoBehaviour 
 {
+	public Ship shooter;
+
 	/// <summary>
 	/// Raises the trigger enter 2d event, exploding enemies hitted by bullet.
 	/// </summary>
@@ -49,6 +51,6 @@ public class Bullet : MonoBehaviour
 	{
 		Enemy script = enemy.GetComponent<Enemy> ();
 		script.Explode ();
-		GameVariables.IncreasePlayerScore(GameVariables.GetEnemyScore(script.Name));
+		shooter.IncreaseScore (Score.GetEnemy (script.Name));
 	}
 }

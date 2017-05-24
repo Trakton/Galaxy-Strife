@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Starts a game mode OnMouseDown event.
+/// </summary>
 public class StartGame : MonoBehaviour 
 {
      public float spawnIntervalFactor = 1;
      public int enemiesAmountFactor = 1;
      public float timeToNextWaveFactor = 1;
-     public string difficulty;
+	 public Difficulty difficulty;
 
 	void OnMouseDown () 
     {
@@ -17,8 +20,10 @@ public class StartGame : MonoBehaviour
         CicleWave.spawnIntervalFactor = spawnIntervalFactor;
         CicleWave.timeToNextWaveFactor = timeToNextWaveFactor;
 
-        GameVariables.difficulty = difficulty;
+        GameState.difficulty = difficulty;
 
-        Application.LoadLevel("Gameplay");
+		Score.Init ();
+
+        SceneManager.LoadScene("Gameplay");
 	}
 }

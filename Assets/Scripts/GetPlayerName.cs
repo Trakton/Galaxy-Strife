@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gets the typed text from a text field.
+/// </summary>
 public class GetPlayerName : MonoBehaviour 
 {
     public Vector2 screenDivision;

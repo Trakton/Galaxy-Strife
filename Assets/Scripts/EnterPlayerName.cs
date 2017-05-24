@@ -1,43 +1,59 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using System;
+using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Shows on gameover screen. Updates the leaderboard with new ship scores.
+/// </summary>
 public class EnterPlayerName : MonoBehaviour 
 {
+	GameState gameState;
+
+	void Start()
+	{
+		gameState = GameObject.FindGameObjectWithTag ("GameState").GetComponent<GameState> ();
+	}
+
     void OnMouseDown()
     {
-        bool beatAnyScore = false;
-        int i = 0;
+		if (GameState.difficulty == Difficulty.Beginner) {
+			int originalSize = Leaderboard.beginnerEntries.Length;
+			int newSize = Leaderboard.beginnerEntries.Length + gameState.ships.Length;
 
-        while (!beatAnyScore)
-        {
-            if (GameVariables.difficulty == "hardcore")
-            {
-                if (Leaderboard.hardcoreScores[i] < GameVariables.GetPlayerScore())
-                {
-                    Leaderboard.hardcoreScores[i] = GameVariables.GetPlayerScore();
-                    Leaderboard.hardcoreNames[i] = GetPlayerName.Text;
-                    beatAnyScore = true;
-                }
-            }
+			LeaderboardEntry[] entries = new LeaderboardEntry[newSize];
 
-            else if (GameVariables.difficulty == "beginner")
-            {
-                if (Leaderboard.beginnerScores[i] < GameVariables.GetPlayerScore())
-                {
-                    Leaderboard.beginnerScores[i] = GameVariables.GetPlayerScore();
-                    Leaderboard.beginnerNames[i] = GetPlayerName.Text;
-                    beatAnyScore = true;
-                }
-            }
+			for (int i = 0; i < originalSize; i++)
+				entries [i] = Leaderboard.beginnerEntries [i];
 
-            i++;
+			for (int i = originalSize; i < newSize; i++)
+				entries [i] = new LeaderboardEntry (GetPlayerName.Text, gameState.ships [i - originalSize].Score);
 
-            if (!(i < 5))
-                beatAnyScore = true;
-        }
+			Array.Sort (entries);
+
+			for (int i = 0; i < originalSize; i++)
+				Leaderboard.beginnerEntries [i] = entries [i];
+		} 
+		else if (GameState.difficulty == Difficulty.Hardcore) {
+			int originalSize = Leaderboard.hardcoreEntries.Length;
+			int newSize = Leaderboard.hardcoreEntries.Length + gameState.ships.Length;
+
+			LeaderboardEntry[] entries = new LeaderboardEntry[newSize];
+
+			for (int i = 0; i < originalSize; i++)
+				entries [i] = Leaderboard.hardcoreEntries [i];
+
+			for (int i = originalSize; i < newSize; i++)
+				entries [i] = new LeaderboardEntry (GetPlayerName.Text, gameState.ships [i - originalSize].Score);
+
+			Array.Sort (entries);
+
+			for (int i = 0; i < originalSize; i++)
+				Leaderboard.hardcoreEntries [i] = entries [i];
+		}
 
         Leaderboard.Save();
        
-        Application.LoadLevel(GameVariables.difficulty + "Leaderboard");
+        SceneManager.LoadScene(GameState.difficulty + "Leaderboard");
     }
 }

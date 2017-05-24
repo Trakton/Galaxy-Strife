@@ -5,8 +5,9 @@ using System.Collections.Generic;
 /// <summary>
 /// A basic gun can shoot bullets. Can be extended to define rules for controlling and shooting the gun.
 /// </summary>
-public class Gun : MonoBehaviour {
-
+public class Gun : MonoBehaviour 
+{
+	public Ship shooter;
 	public GameObject bullet;
 	public AudioSource audio;
 	public float shootRate;
@@ -28,6 +29,7 @@ public class Gun : MonoBehaviour {
 	protected void Shoot()
 	{
 		GameObject bullet = ObjectsPool.GetFromPool("bullet");
+		bullet.GetComponent<Bullet> ().shooter = shooter;
 		bullet.transform.position = transform.position;
 		bullet.transform.rotation = transform.rotation;
 		bullet.GetComponent<Rigidbody2D>().velocity = transform.right * shootSpeed * Time.deltaTime;

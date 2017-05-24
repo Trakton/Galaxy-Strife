@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// An entry in the leaderboard GUI.
+/// </summary>
 public class DrawLeaderboard : MonoBehaviour 
 {
     public bool hardcore;
@@ -17,14 +20,14 @@ public class DrawLeaderboard : MonoBehaviour
 
         if (name)
         {
-            if (hardcore) guiText.text = Leaderboard.hardcoreNames[index];
-            else if (beginner) guiText.text = Leaderboard.beginnerNames[index];
+			if (hardcore) guiText.text = Leaderboard.hardcoreEntries[index].Name;
+			else if (beginner) guiText.text = Leaderboard.beginnerEntries[index].Name;
         }
 
         else if (score)
         {
-            if (hardcore) guiText.text = Leaderboard.hardcoreScores[index].ToString();
-            else if (beginner) guiText.text = Leaderboard.beginnerScores[index].ToString();
+            if (hardcore) guiText.text = Leaderboard.hardcoreEntries[index].Score.ToString();
+            else if (beginner) guiText.text = Leaderboard.beginnerEntries[index].Score.ToString();
         }
                 
 	}

@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
+/// <summary>
+/// Changes the current scene to a specific scene name on mouse down.
+/// </summary>
 public class ChangeSceneOnClick : MonoBehaviour 
 {
     public string nextScene = "";
@@ -12,7 +16,7 @@ public class ChangeSceneOnClick : MonoBehaviour
         if (nextScene == "")
             Application.Quit();
 
-        Application.LoadLevel(nextScene);
+		SceneManager.LoadScene(nextScene);
     }
 
 }

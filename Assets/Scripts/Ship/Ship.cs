@@ -6,15 +6,31 @@ using System.Collections;
 /// </summary>
 public class Ship : MonoBehaviour 
 {
+	public int id;
+
+	int score;
+	public int Score 
+	{ 
+		get { return score; }
+	}
+
+	int lives;
+	public int Lives 
+	{ 
+		get { return lives; } 
+	}
+		
 	protected ParticleSystem engine;
 	protected BoxCollider2D box2d;
 	protected Rigidbody2D body;
+	protected SpriteRenderer renderer;
 
 	public GameObject gun;
 	public float moveSpeed = 10;
 
 	protected float timer;
 	protected float levelUpScore = 10000;
+	protected int getLiveScore = 50000;
 
 	protected Vector2 direction;
 
@@ -22,17 +38,20 @@ public class Ship : MonoBehaviour
 
 	protected virtual void Start()
 	{
-		Dead = false;
-		timer = 0;
+		ResetVariables ();
 		engine = GetComponentInChildren<ParticleSystem>();
 		box2d = GetComponent<BoxCollider2D>();
 		body = GetComponent<Rigidbody2D> ();
+		renderer = GetComponent<SpriteRenderer> ();
 	}
 
 	protected virtual void Update()
 	{
-		if (GameVariables.GetPlayerScore() > levelUpScore)
+		if (Score > levelUpScore)
 			LevelUp();
+
+		if (Score > getLiveScore)
+			GetLive ();
 	}
 
 	protected virtual void FixedUpdate()
@@ -47,6 +66,17 @@ public class Ship : MonoBehaviour
 	{ }
 
 	/// <summary>
+	/// Resets the variables to a starting state for a fresh game.
+	/// </summary>
+	protected virtual void ResetVariables()
+	{
+		Dead = false;
+		timer = 0;
+		score = 0;
+		lives = 3;
+	}
+
+	/// <summary>
 	/// Respawns the ship, enabling it's components.
 	/// </summary>
 	protected virtual void Spawn()
@@ -55,11 +85,20 @@ public class Ship : MonoBehaviour
 			gun.enabled = true;
 
 		ExplosionGenerator.SpawnPlayer (transform.position);
-		GetComponent<Renderer>().enabled = true;
+		renderer.enabled = true;
 		box2d.enabled = true;
 		engine.Play();
 		Dead = false;
 		timer = 0;
+	}
+
+	/// <summary>
+	/// When player reaches certain score, it wins a life.
+	/// </summary>
+	protected virtual void GetLive()
+	{
+		lives++;
+		getLiveScore += 50000;
 	}
 
 	/// <summary>
@@ -69,6 +108,7 @@ public class Ship : MonoBehaviour
 	{
 		GameObject newGun = Instantiate(gun, transform.position, Quaternion.identity) as GameObject;
 		newGun.transform.parent = transform;
+		newGun.GetComponent<Gun> ().shooter = this;
 
 		MouseDrivenGun[] playerGuns = GetComponentsInChildren<MouseDrivenGun>();
 
@@ -98,8 +138,8 @@ public class Ship : MonoBehaviour
 			enemy.GetComponent<Enemy> ().Explode ();
 
 		ExplosionGenerator.ExplodePlayer (transform.position);
-		GetComponent<Renderer>().enabled = false;
-		GameVariables.DecreasePlayerLives();
+		renderer.enabled = false;
+		lives = Mathf.Clamp (Lives - 1, 0, 6);
 		box2d.enabled = false;
 		engine.Stop();
 		Dead = true;
@@ -115,5 +155,14 @@ public class Ship : MonoBehaviour
 		{
 			Die();
 		}
+	}
+
+	/// <summary>
+	/// Increases the ship score.
+	/// </summary>
+	/// <param name="amount">How much to increase.</param>
+	public void IncreaseScore(int amount)
+	{
+		score += amount;
 	}
 }
