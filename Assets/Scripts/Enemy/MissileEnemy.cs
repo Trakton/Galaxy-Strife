@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Special enemy type that is unaware of player position. It moves horizontally or vertically in a line to the edges of the map.
+/// </summary>
 public class MissileEnemy : Enemy 
 {
     Vector2 targetDirection;
@@ -9,10 +12,12 @@ public class MissileEnemy : Enemy
     Vector2 direction;
     float rotation;
   
-
-	void Start () 
+	/// <summary>
+	/// Choses if this one will be a vertical or horizontal missile type.
+	/// </summary>
+	protected override void Start () 
     {
-        Begin();
+		base.Start();
 
         if (Random.Range(0, 10) > 5)
         {
@@ -29,15 +34,12 @@ public class MissileEnemy : Enemy
 
         transform.rotation = Quaternion.AngleAxis(targetRotation * (targetDirection.x + targetDirection.y), Vector3.forward);
 	}
-	
-	void Update () 
-    {
-        if (!active)
-        {
-            SlowlySpawn();
-            return;
-        }
 
+	/// <summary>
+	/// Moves in a straight line to the edges of the map, horizontally on vertically. Makes a turn when reach it.
+	/// </summary>
+	protected override void SeekPlayer () 
+    {
         if (orientation == "horizontal")
         {
             if (transform.position.x < -8.5f)
@@ -51,7 +53,6 @@ public class MissileEnemy : Enemy
                 targetRotation = 180;
             }
         }
-
         else if (orientation == "vertical")
         {
             if (transform.position.y < -4.5f)
@@ -70,12 +71,7 @@ public class MissileEnemy : Enemy
                                 Mathf.Lerp(direction.y, targetDirection.y, 1 * Time.deltaTime));
 
         rotation = Mathf.Lerp(rotation, targetRotation, 5 * Time.deltaTime);
-        GetComponent<Rigidbody2D>().velocity = direction * moveSpeed * Time.deltaTime;
+        body.velocity = direction * moveSpeed * Time.deltaTime;
         transform.rotation = Quaternion.AngleAxis(rotation, Vector3.forward);
 	}
-
-    void OnDisable()
-    {
-        base.Disable();
-    }
 }

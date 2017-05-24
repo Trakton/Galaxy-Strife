@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Special enemy type with spiral move.
+/// </summary>
 public class FractionaryEnemy : Enemy
 {
     public float minRotationSpeed = 80.0f;
@@ -12,22 +15,19 @@ public class FractionaryEnemy : Enemy
     private Transform target;
     private Quaternion qTo;
 
-    void Start()
+	protected override void Start()
     {
-        Begin();
+		base.Start ();
         target = GameObject.Find("Player").transform;
         rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
         movementSpeed = Random.Range(minMovementSpeed, maxMovementSpeed);
     }
 
-    void Update()
-    {
-        if (!active)
-        {
-            SlowlySpawn();
-            return;
-        }
-            
+	/// <summary>
+	/// Moves to player direction making spirals.
+	/// </summary>
+    protected override void SeekPlayer()
+    {  
         Vector3 v3 = target.position - transform.position;
         float angle = Mathf.Atan2(v3.y, v3.x) * Mathf.Rad2Deg;
         qTo = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -37,10 +37,5 @@ public class FractionaryEnemy : Enemy
 
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -11f + GetComponent<Renderer>().bounds.size.x / 2, 11 - GetComponent<Renderer>().bounds.size.x / 2),
                                          Mathf.Clamp(transform.position.y, -7f + GetComponent<Renderer>().bounds.size.y / 2, 7f - GetComponent<Renderer>().bounds.size.y / 2), 0);
-    }
-
-    void OnDisable()
-    {
-        base.Disable();
     }
 }
