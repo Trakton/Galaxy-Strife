@@ -13,7 +13,7 @@ public class ChangeSceneOnClick : MonoBehaviour
     {
         Leaderboard.Save();
 
-        if (nextScene == "")
+		if (nextScene.Equals(""))
             Application.Quit();
 
 		SceneManager.LoadScene(nextScene);

@@ -26,7 +26,7 @@ public class Ship : MonoBehaviour
 	protected SpriteRenderer renderer;
 
 	public GameObject gun;
-	public float moveSpeed = 10;
+	public float moveSpeed = 5000;
 
 	protected float timer;
 	protected float levelUpScore = 10000;
@@ -47,6 +47,17 @@ public class Ship : MonoBehaviour
 
 	protected virtual void Update()
 	{
+		if (Dead)
+		{
+			timer += Time.deltaTime;
+
+			if (timer > 2)
+			{
+				if (Lives > 0)
+					Spawn();
+			} 
+		}
+		
 		if (Score > levelUpScore)
 			LevelUp();
 
@@ -63,7 +74,19 @@ public class Ship : MonoBehaviour
 	}
 
 	protected virtual void Move()
-	{ }
+	{
+		if (direction != Vector2.zero)
+		{
+			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+		}
+
+		Vector2 force = direction * moveSpeed * Time.deltaTime;
+		body.AddForce(force);
+
+		engine.enableEmission = Mathf.Abs(body.velocity.x) + Mathf.Abs(body.velocity.y) > 0.1f ? true : false;
+	}
 
 	/// <summary>
 	/// Resets the variables to a starting state for a fresh game.

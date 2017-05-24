@@ -7,7 +7,7 @@ public class TrackPlayerPosition : MonoBehaviour
 
 	void Start () 
     {
-        player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+		player = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
 	}
 	
 	void FixedUpdate () 

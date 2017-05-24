@@ -24,6 +24,6 @@ public class StartGame : MonoBehaviour
 
 		Score.Init ();
 
-        SceneManager.LoadScene("Gameplay");
+        SceneManager.LoadScene("GameplayIA");
 	}
 }
