@@ -27,6 +27,16 @@ public static class ExplosionGenerator
 	}
 
 	/// <summary>
+	/// Generates an player death type explosion.
+	/// </summary>
+	/// <param name="position">The vector3 position of the explosion.</param>
+	static public void ExplodePlayer(Vector3 position)
+	{
+		GameObject deathExplosion = ObjectsPool.GetFromPool("playerDeathExplosion");
+		deathExplosion.transform.position = position;
+	}
+
+	/// <summary>
 	/// Generates an player spawn type explosion.
 	/// </summary>
 	/// <param name="position">The vector3 position of the explosion.</param>
@@ -37,12 +47,12 @@ public static class ExplosionGenerator
 	}
 
 	/// <summary>
-	/// Generates an player death type explosion.
+	/// Generates an enemy spawn type explosion.
 	/// </summary>
 	/// <param name="position">The vector3 position of the explosion.</param>
-	static public void ExplodePlayer(Vector3 position)
+	static public void SpawnEnemy(string type, Vector3 position)
 	{
-		GameObject deathExplosion = ObjectsPool.GetFromPool("playerDeathExplosion");
-		deathExplosion.transform.position = position;
+		GameObject spawnExplosion = ObjectsPool.GetFromPool(ObjectsPool.Spawns[type]);
+		spawnExplosion.transform.position = position;
 	}
 }

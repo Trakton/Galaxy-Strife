@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Control the manually made starting wave. Generates a circle wave manager when all the waves are cleared.
+/// </summary>
 public class WaveManager : MonoBehaviour 
 {
     public Wave[] waves;
@@ -12,8 +15,12 @@ public class WaveManager : MonoBehaviour
     GameObject currentWave;
     int waveNumber = 0;
 
+	CicleWaveManager cicleManager;
+
 	void Start () 
     {
+		cicleManager = GameObject.Find ("CicleWaveManager").GetComponent<CicleWaveManager> ();
+
         wavesToSpawn = new Queue<Wave>();
 
         for (int i = 0; i < waves.Length; i++)
@@ -44,7 +51,7 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            GameObject.Find("CicleWaveManager").GetComponent<CicleWaveManager>().enabled = true;
+            cicleManager.enabled = true;
             this.gameObject.SetActive(false);
         }
     }

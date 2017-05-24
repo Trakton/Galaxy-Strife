@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Has a list of pseudo random enemies to spawn made manually.
+/// </summary>
 public class Wave : MonoBehaviour
 {
     static public float spawnIntervalFactor = 1;
@@ -116,7 +119,7 @@ public class Wave : MonoBehaviour
 {
         if (IsSpawning)
         {
-            spawned += 1 * enemiesAmountFactor;
+            spawned += enemiesAmountFactor;
 
             Vector3 position;
             Vector3 distance;
@@ -146,12 +149,8 @@ public class Wave : MonoBehaviour
             }
 
             string enemyName = enemiesToSpawn.Dequeue();
-            GameObject newEnemy = ObjectsPool.GetFromPool(enemyName);
-            newEnemy.transform.position = position;
-            newEnemy.transform.rotation = Quaternion.identity;
-
-			GameObject newEnemySpawn = ObjectsPool.GetFromPool(ObjectsPool.Spawns[enemyName]);
-            newEnemySpawn.transform.position = position;
+			Enemy newEnemy = ObjectsPool.GetFromPool(enemyName).GetComponent<Enemy>();
+			newEnemy.Spawn (position);
         }
 
         time = 0;

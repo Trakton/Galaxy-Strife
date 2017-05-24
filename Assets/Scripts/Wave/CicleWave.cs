@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Has a list of pseudo random enemies to spawn that can be spawned again with increased difficulty.
+/// </summary>
 public class CicleWave : MonoBehaviour 
 {
     static public float spawnIntervalFactor = 1;
@@ -117,11 +120,7 @@ public class CicleWave : MonoBehaviour
         }
 
         string enemyName = enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)];
-        GameObject newEnemy = ObjectsPool.GetFromPool(enemyName);
-        newEnemy.transform.position = position;
-        newEnemy.transform.rotation = Quaternion.identity;
-
-        GameObject newEnemySpawn = ObjectsPool.GetFromPool(ObjectsPool.Spawns[enemyName]);
-        newEnemySpawn.transform.position = position; 
+		Enemy newEnemy = ObjectsPool.GetFromPool(enemyName).GetComponent<Enemy>();
+		newEnemy.Spawn (position);
     }
 }

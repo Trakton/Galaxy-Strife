@@ -76,6 +76,17 @@ public class Enemy : MonoBehaviour
     }
 
 	/// <summary>
+	/// Generates an explosion on enemy spawn.
+	/// </summary>
+	public virtual void Spawn(Vector3 position)
+	{
+		transform.rotation = Quaternion.identity;
+		transform.position = position;
+		ExplosionGenerator.SpawnEnemy (Name, transform.position);
+	}
+
+
+	/// <summary>
 	/// Disable this instance.
 	/// </summary>
     protected virtual void OnDisable()
