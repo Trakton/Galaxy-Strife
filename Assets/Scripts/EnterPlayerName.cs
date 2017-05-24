@@ -4,7 +4,7 @@ using System;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Shows on gameover screen. Updates the leaderboard with new ship scores.
+/// Shows on gameover screen. Updates the leaderboard with new ship scores on mouse down.
 /// </summary>
 public class EnterPlayerName : MonoBehaviour 
 {

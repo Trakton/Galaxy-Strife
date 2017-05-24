@@ -15,6 +15,8 @@ public class Gun : MonoBehaviour
 	public float angleOffset;
 	public float time;
 
+	protected Vector3 target;
+
 	Queue<GameObject> bullets;
 
 	protected virtual void Start()
@@ -23,10 +25,41 @@ public class Gun : MonoBehaviour
 		bullets = new Queue<GameObject> ();
 	}
 
+	protected virtual void Update()
+	{
+		Aim ();
+		PrepareShoot ();
+	}
+
+	/// <summary>
+	/// Reloads the gun for a new shoot.
+	/// </summary>
+	protected virtual void PrepareShoot()
+	{
+		time += Time.deltaTime;
+
+		if(time >= shootRate)
+			Shoot();
+	}
+
+	/// <summary>
+	/// Aims in a target vector3 position.
+	/// </summary>
+	protected virtual void Aim()
+	{
+		Vector3 lookPos = Camera.main.ScreenToWorldPoint(target);
+		lookPos -= transform.position;
+		lookPos.Normalize();
+
+		float angle = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
+		angle -= angleOffset;
+		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+	}
+
 	/// <summary>
 	/// Gets a bullet from the inactive objects pool and apply a force on it to shoot.
 	/// </summary>
-	protected void Shoot()
+	protected virtual void Shoot()
 	{
 		GameObject bullet = ObjectsPool.GetFromPool("bullet");
 		bullet.GetComponent<Bullet> ().shooter = shooter;
