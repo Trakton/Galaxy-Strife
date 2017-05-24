@@ -12,7 +12,7 @@ public class MissileEnemy : Enemy
 
 	void Start () 
     {
-        Beggin();
+        Begin();
 
         if (Random.Range(0, 10) > 5)
         {

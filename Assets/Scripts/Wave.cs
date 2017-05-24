@@ -29,6 +29,8 @@ public class Wave : MonoBehaviour
     Vector3 packOrigin;
     bool shouldUseOrigin;
 
+	Ship player;
+
     public bool IsSpawning
     {
         get { return enemiesToSpawn.Count > 0; }
@@ -36,6 +38,8 @@ public class Wave : MonoBehaviour
 
 	void Start () 
     {
+		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Ship> ();
+
         string[][] allEnemies = new string[][]
         {
             randomEnemies1,
@@ -61,14 +65,14 @@ public class Wave : MonoBehaviour
         if (!shouldUseOrigin)
         {
             packOrigin = new Vector3(Random.Range(-10, 10), Random.Range(-6, 6), 0);
-            Vector3 distance = PlayerController.Position - packOrigin;
+			Vector3 distance = player.transform.position - packOrigin;
 
             if (Mathf.Abs(distance.x) + packRange.x <= 4 && Mathf.Abs(distance.y) + packRange.y <= 4)
             {
                 while (Mathf.Abs(distance.x) <= 4 && Mathf.Abs(distance.y) <= 4)
                 {
                     packOrigin = new Vector3(Random.Range(-10, 10), Random.Range(-6, 6), 0);
-                    distance = PlayerController.Position - packOrigin;
+					distance = player.transform.position - packOrigin;
                 }
             }
         }
@@ -80,7 +84,7 @@ public class Wave : MonoBehaviour
     {
         time += Time.deltaTime;
 
-        if (PlayerController.Dead)
+        if (player.Dead)
         {
             time = -1;
             return;
@@ -129,14 +133,14 @@ public class Wave : MonoBehaviour
             else
             {
                 position = new Vector3(Random.Range(-10, 10), Random.Range(-6, 6), 0);
-                distance = PlayerController.Position - position;
+				distance = player.transform.position - position;
 
                 if (Mathf.Abs(distance.x) <= 4 && Mathf.Abs(distance.y) <= 4)
                 {
                     while (Mathf.Abs(distance.x) <= 4 && Mathf.Abs(distance.y) <= 4)
                     {
                         position = new Vector3(Random.Range(-10, 10), Random.Range(-6, 6), 0);
-                        distance = PlayerController.Position - position;
+						distance = player.transform.position - position;
                     }
                 }
             }
@@ -146,7 +150,7 @@ public class Wave : MonoBehaviour
             newEnemy.transform.position = position;
             newEnemy.transform.rotation = Quaternion.identity;
 
-            GameObject newEnemySpawn = ObjectsPool.GetFromPool(ObjectsPool.spawnsDic[enemyName]);
+			GameObject newEnemySpawn = ObjectsPool.GetFromPool(ObjectsPool.Spawns[enemyName]);
             newEnemySpawn.transform.position = position;
         }
 

@@ -9,7 +9,7 @@ public class WandererEnemy : Enemy
 
 	void Start () 
     {
-        Beggin();
+        Begin();
         moveSpeed = Random.Range(moveSpeed - moveSpeed / 5f, moveSpeed + moveSpeed / 5f);
         directionChangeTime = Random.Range(3, 6);
         direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));

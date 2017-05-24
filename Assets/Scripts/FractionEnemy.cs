@@ -8,7 +8,7 @@ public class FractionEnemy : Enemy
 
 	void Start ()
     {
-        Beggin();
+        Begin();
         rotateSpeed = Random.Range(rotateSpeed * 3 / 4, rotateSpeed);
         moveSpeed = Random.Range(moveSpeed * 3 / 4, moveSpeed);
 	}

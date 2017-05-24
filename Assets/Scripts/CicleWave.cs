@@ -25,6 +25,8 @@ public class CicleWave : MonoBehaviour
     public int enemiesSpawned;
     public float time;
 
+	Ship player;
+
     [HideInInspector]
     public bool shouldPlayNextWave;
 
@@ -35,19 +37,20 @@ public class CicleWave : MonoBehaviour
 
 	void Start () 
     {
+		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Ship> ();
         if (origin.Length > 0)
             wavePosition = origin[0];
         else
         {
             wavePosition = new Vector3(Random.Range(-10, 10), Random.Range(-6, 6), 0);
-            Vector3 distance = PlayerController.Position - wavePosition;
+            Vector3 distance = player.transform.position - wavePosition;
 
             if (Mathf.Abs(distance.x) + packRange.x <= 4 && Mathf.Abs(distance.y) + packRange.y <= 4)
             {
                 while (Mathf.Abs(distance.x) <= 4 && Mathf.Abs(distance.y) <= 4)
                 {
                     wavePosition = new Vector3(Random.Range(-10, 10), Random.Range(-6, 6), 0);
-                    distance = PlayerController.Position - wavePosition;
+					distance = player.transform.position - wavePosition;
                 }
             }
         }
@@ -57,7 +60,7 @@ public class CicleWave : MonoBehaviour
     {
         time += Time.deltaTime;
 
-        if (PlayerController.Dead)
+        if (player.Dead)
         {
             time = -1;
             return;
@@ -95,20 +98,20 @@ public class CicleWave : MonoBehaviour
                 wavePosition = origin[Random.Range(0, origin.Length)];
 
                 position = wavePosition + new Vector3(Random.Range(-packRange.x, packRange.x),
-                                                          Random.RandomRange(-packRange.y, packRange.y), 0);
+                                                      Random.RandomRange(-packRange.y, packRange.y), 0);
         }
 
         else
         {
             position = new Vector3(Random.Range(-10, 10), Random.Range(-6, 6), 0);
-            distance = PlayerController.Position - position;
+			distance = player.transform.position - position;
 
             if (Mathf.Abs(distance.x) <= 4 && Mathf.Abs(distance.y) <= 4)
             {
                 while (Mathf.Abs(distance.x) <= 4 && Mathf.Abs(distance.y) <= 4)
                 {
                     position = new Vector3(Random.Range(-10, 10), Random.Range(-6, 6), 0);
-                    distance = PlayerController.Position - position;
+					distance = player.transform.position - position;
                 }
             }
         }
@@ -118,7 +121,7 @@ public class CicleWave : MonoBehaviour
         newEnemy.transform.position = position;
         newEnemy.transform.rotation = Quaternion.identity;
 
-        GameObject newEnemySpawn = ObjectsPool.GetFromPool(ObjectsPool.spawnsDic[enemyName]);
+        GameObject newEnemySpawn = ObjectsPool.GetFromPool(ObjectsPool.Spawns[enemyName]);
         newEnemySpawn.transform.position = position; 
     }
 }

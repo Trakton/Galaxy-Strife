@@ -8,7 +8,7 @@ public class WalkerEnemy : Enemy
 
 	void Start () 
     {
-        Beggin();
+        Begin();
         orbitSpeed = Random.RandomRange(orbitSpeed - orbitSpeed / 5f, orbitSpeed + orbitSpeed / 5f);
         moveSpeed = Random.RandomRange(moveSpeed - moveSpeed / 5f, moveSpeed + moveSpeed / 5f);
         orientation = Random.Range(0, 10) > 5 ? Vector3.forward : Vector3.back;
@@ -23,7 +23,7 @@ public class WalkerEnemy : Enemy
         }
 
         base.SeekPlayer();
-        transform.RotateAround(PlayerController.Position, orientation, orbitSpeed * Time.deltaTime);
+		transform.RotateAround(player.transform.position, orientation, orbitSpeed * Time.deltaTime);
 	}
 
     void OnDisable()

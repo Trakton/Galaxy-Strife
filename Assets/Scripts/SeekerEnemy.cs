@@ -5,7 +5,7 @@ public class SeekerEnemy : Enemy
 {
     void Start()
     {
-        Beggin();
+        Begin();
         moveSpeed = Random.Range(moveSpeed - moveSpeed / 5f, moveSpeed + moveSpeed / 5f);
     }
 

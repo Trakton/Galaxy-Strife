@@ -68,7 +68,7 @@ public class GameVariables : MonoBehaviour
         return playerScore;
     }
 
-    static public void IncreasePlayeScore(int value)
+    static public void IncreasePlayerScore(int value)
     {
         playerScore += value;
     }

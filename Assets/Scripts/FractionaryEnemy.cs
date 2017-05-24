@@ -14,7 +14,7 @@ public class FractionaryEnemy : Enemy
 
     void Start()
     {
-        Beggin();
+        Begin();
         target = GameObject.Find("Player").transform;
         rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
         movementSpeed = Random.Range(minMovementSpeed, maxMovementSpeed);
