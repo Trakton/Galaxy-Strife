@@ -50,7 +50,7 @@ public class Bullet : MonoBehaviour
 	void ExplodeEnemy(GameObject enemy)
 	{
 		Enemy script = enemy.GetComponent<Enemy> ();
-		script.Explode ();
+		EnemyManager.Kill (script.Id);
 		shooter.IncreaseScore (Score.GetEnemy (script.Name));
 	}
 }

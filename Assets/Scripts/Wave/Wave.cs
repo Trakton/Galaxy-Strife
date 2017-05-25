@@ -116,7 +116,7 @@ public class Wave : MonoBehaviour
 	}
 
     void Spawn()
-{
+	{
         if (IsSpawning)
         {
             spawned += enemiesAmountFactor;
@@ -135,22 +135,14 @@ public class Wave : MonoBehaviour
 
             else
             {
-                position = new Vector3(Random.Range(-10, 10), Random.Range(-6, 6), 0);
-				distance = player.transform.position - position;
-
-                if (Mathf.Abs(distance.x) <= 4 && Mathf.Abs(distance.y) <= 4)
-                {
-                    while (Mathf.Abs(distance.x) <= 4 && Mathf.Abs(distance.y) <= 4)
-                    {
-                        position = new Vector3(Random.Range(-10, 10), Random.Range(-6, 6), 0);
-						distance = player.transform.position - position;
-                    }
-                }
+				do {
+					position = new Vector3 (Random.Range (-10, 10), Random.Range (-6, 6), 0);
+					distance = player.transform.position - position;
+				} while (Mathf.Abs (distance.x) <= 4 && Mathf.Abs (distance.y) <= 4);
             }
 
             string enemyName = enemiesToSpawn.Dequeue();
-			Enemy newEnemy = ObjectsPool.GetFromPool(enemyName).GetComponent<Enemy>();
-			newEnemy.Spawn (position);
+			EnemyManager.Spawn (enemyName, position);
         }
 
         time = 0;

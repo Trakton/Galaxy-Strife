@@ -8,7 +8,7 @@ public class SelfDrivenShip : Ship
 {
 	protected override void Move()
 	{
-		direction.x = 1;
+		
 
 		base.Move ();
 	}

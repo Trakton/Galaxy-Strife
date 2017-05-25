@@ -23,6 +23,7 @@ public class StartGame : MonoBehaviour
         GameState.difficulty = difficulty;
 
 		Score.Init ();
+		EnemyManager.Start (1000);
 
         SceneManager.LoadScene("GameplayIA");
 	}

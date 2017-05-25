@@ -18,7 +18,7 @@ public class FractionaryEnemy : Enemy
 	protected override void Start()
     {
 		base.Start ();
-        target = GameObject.Find("Player").transform;
+		target = player.transform;
         rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
         movementSpeed = Random.Range(minMovementSpeed, maxMovementSpeed);
     }

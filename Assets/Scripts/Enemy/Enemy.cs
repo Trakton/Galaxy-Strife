@@ -17,6 +17,15 @@ public class Enemy : MonoBehaviour
 		} 
 	}
 
+	int id;
+	/// <summary>
+	/// Gets the enemy identifier in the enemy manager array.
+	/// </summary>
+	public int Id
+	{
+		get { return id; }
+	}
+
     public float moveSpeed;
     protected bool active;
 	private float colorAlpha;
@@ -78,11 +87,12 @@ public class Enemy : MonoBehaviour
 	/// <summary>
 	/// Generates an explosion on enemy spawn.
 	/// </summary>
-	public virtual void Spawn(Vector3 position)
+	public virtual void Spawn(Vector3 position, int id)
 	{
 		transform.rotation = Quaternion.identity;
 		transform.position = position;
 		ExplosionGenerator.SpawnEnemy (Name, transform.position);
+		this.id = id;
 	}
 
 
