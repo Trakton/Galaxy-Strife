@@ -10,7 +10,19 @@ public class GameState : MonoBehaviour
 {
 	static public Difficulty difficulty;
 
+	static EnemyManager enemies;
+	/// <summary>
+	/// Gets the enemy manager for the gameplay instance. Has information about live enemies stored.
+	/// </summary>
+	static public EnemyManager Enemies 
+	{
+		get { return enemies; }
+	}
+
 	int highscore;
+	/// <summary>
+	/// Gets the current in game highscore.
+	/// </summary>
 	public int Highscore 
 	{ 
 		get { return highscore; } 
@@ -18,10 +30,11 @@ public class GameState : MonoBehaviour
 
 	public Ship[] ships;
 	bool raisedGameover;
-   
+
 	void Start () 
     {
 		raisedGameover = false;
+		enemies = new EnemyManager (1000);
 		highscore = difficulty == Difficulty.Hardcore? Leaderboard.hardcoreEntries[0].Score : Leaderboard.beginnerEntries[0].Score;
 	}
 	

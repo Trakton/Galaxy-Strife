@@ -142,7 +142,7 @@ public class Wave : MonoBehaviour
             }
 
             string enemyName = enemiesToSpawn.Dequeue();
-			EnemyManager.Spawn (enemyName, position);
+			GameState.Enemies.Spawn (enemyName, position);
         }
 
         time = 0;

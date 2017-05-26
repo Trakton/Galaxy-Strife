@@ -113,6 +113,6 @@ public class CicleWave : MonoBehaviour
         }
 
         string enemyName = enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)];
-		EnemyManager.Spawn (enemyName, position);
+		GameState.Enemies.Spawn (enemyName, position);
     }
 }
